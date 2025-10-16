@@ -70,7 +70,7 @@ export function apply(ctx: Context, config: Config) {
   ctx
     .command('钓鱼')
 
-  ctx.command('钓鱼说明', '简单介绍下钓鱼游戏').action(async ({ session }) => {
+  ctx.command('钓鱼/钓鱼说明', '简单介绍下钓鱼游戏').action(async ({ session }) => {
     let at = ''
     if (config.atQQ) {
       at = `<at id="${session.userId}" />`
@@ -107,7 +107,7 @@ export function apply(ctx: Context, config: Config) {
     await session.send(at + msg);
   })
 
-  ctx.command('开始钓鱼', '开始钓鱼吧').userFields(['id']).action(async ({ session }) => {
+  ctx.command('钓鱼/开始钓鱼', '开始钓鱼吧').userFields(['id']).action(async ({ session }) => {
     let at = "";
     if (config.atQQ) {
       at = `<at id="${session.userId}" />`;
@@ -211,7 +211,7 @@ ${fish.msg}` : "");
     }
   })
 
-  ctx.command('查看鱼塘', '查看群鱼塘的信息').action(async ({ session }) => {
+  ctx.command('钓鱼/查看鱼塘', '查看群鱼塘的信息').action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -219,14 +219,14 @@ ${fish.msg}` : "");
     }
 
     // 获取单群信息
-    const temp = getguildData(session.guild);
+    const temp = getguildData(session.guildId);
 
     temp.initFishpond() && await session.send(at + '隔了一段时间，鱼塘内容刷新了');
     const msg = temp.getNowFishPondInfo()
     await session.send(at + msg);
   });
 
-  ctx.command('钓鱼成就', '查看钓鱼成就').action(async ({ session }) => {
+  ctx.command('钓鱼/钓鱼成就', '查看钓鱼成就').action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -258,7 +258,7 @@ ${fish.msg}` : "");
     await session.send(at + msg);
   });
 
-  ctx.command('钓鱼历史', '查看钓鱼总记录').action(async ({ session }) => {
+  ctx.command('钓鱼/钓鱼历史', '查看钓鱼总记录').action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -294,7 +294,7 @@ ${fish.msg}` : "");
 
   });
 
-  ctx.command('查看成就 <achievement>', '查看钓鱼的对应成就称号').action(async ({ session }, achievement) => {
+  ctx.command('钓鱼/查看成就 <achievement>', '查看钓鱼的对应成就称号').action(async ({ session }, achievement) => {
 
     let at = ''
     if (config.atQQ) {
@@ -316,13 +316,13 @@ ${fish.msg}` : "");
     }
 
     const msg = `找到该成就的信息：\n\n[${info.name}]\n描述：${info.info}\n获得条件：${info.need.map(item => {
-      return `${item.name}<=${item.num}条`
+      return `${item.name}>=${item.num}条`
     }).join('、')}`
     await session.send(at + msg);
 
   });
 
-  ctx.command('钓鱼佩戴 <title>', '佩戴或卸下钓鱼的成就').action(async ({ session }, title) => {
+  ctx.command('钓鱼/钓鱼佩戴 <title>', '佩戴或卸下钓鱼的成就').action(async ({ session }, title) => {
 
     let at = ''
     if (config.atQQ) {
@@ -409,6 +409,13 @@ ${fish.msg}` : "");
       upProb: [{ name: "鲤鱼", up: 2 }, { name: "生鱼", up: 2 }, { name: "鲫鱼", up: 2 }]
     },
     {
+      name: "龟男",
+      msg: ["钓到了不少乌龟了,做的好!已经不错了"],
+      info: "佩戴后，钓鱼的收获环节会增加三倍钓到 乌龟 的概率",
+      need: [{ name: "乌龟", num: 10 }],
+      upProb: [{ name: "乌龟", up: 3 }]
+    },
+    {
       name: "KFC推销员",
       msg: ["看你钓了不少KFC鱼，想必也是特意这样做的吧？那就送你这个称号吧！", "失败是成功之母；VW50，你就是成功支付！\n\n嗯！既然你愿意这样钓这么多这条鱼，应该也有你的想法！送你了，这个称号！"],
       info: "佩戴后，钓鱼的收获环节会增加两倍钓到 VW50鱼 的概率",
@@ -430,7 +437,7 @@ ${fish.msg}` : "");
     return data[userId].take
   }
 
-  ctx.command('钓鱼统计', '查看用户个人记录信息').action(async ({ session }) => {
+  ctx.command('钓鱼/钓鱼统计', '查看用户个人记录信息').action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -556,7 +563,7 @@ ${fish.msg}` : "");
     }
   }
 
-  ctx.command('查看鱼类 <fish>', '查看鱼类的信息').action(async ({ session }, fish) => {
+  ctx.command('钓鱼/查看鱼类 <fish>', '查看鱼类的信息').action(async ({ session }, fish) => {
 
     let at = ''
     if (config.atQQ) {
@@ -582,7 +589,7 @@ ${fish.msg}` : "");
     await session.send(at + `${info.img ? `<img src="${info.img}" />` + '\n' : ''}获取到该鱼信息成功：${info.info ? `\n\n ${info.info}` : ''}\n\n【${info.name}】\n出现概率: ${info.select ? prob + '%' : '暂无'}\n捕获难度: ${info.hard} [${formatHard(info.hard)}]\n售出价格: ${info.price || ''}\n品质: ${info.quality || ''}`);
   })
 
-  ctx.command('钓鱼库存', '查看用户收获的鱼类库存总计').action(async ({ session }) => {
+  ctx.command('钓鱼/钓鱼库存', '查看用户收获的鱼类库存总计').action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -590,12 +597,12 @@ ${fish.msg}` : "");
     }
 
     // 获取单群信息
-    const temp = getguildData(session.guild);
+    const temp = getguildData(session.guildId);
     const msg = await temp.getUserFshHistory(session.userId)
     await session.send(at + msg);
   });
 
-  ctx.command('结束钓鱼', '停止钓鱼').action(async ({ session }) => {
+  ctx.command('钓鱼/结束钓鱼', '停止钓鱼').action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -603,7 +610,7 @@ ${fish.msg}` : "");
     }
 
     // 获取单群信息
-    const temp = getguildData(session.guild);
+    const temp = getguildData(session.guildId);
 
     if (!temp.playUser[session.userId]) {
       await session.send('你还没有钓鱼呢');
@@ -703,7 +710,7 @@ ${fish.msg}` : "");
     }
   }
 
-  ctx.command('查看道具 <props>', '查看对应钓鱼道具中的说明').action(async ({ session }, props) => {
+  ctx.command('钓鱼/查看道具 <props>', '查看对应钓鱼道具中的说明').action(async ({ session }, props) => {
 
     let at = ''
     if (config.atQQ) {
@@ -732,14 +739,14 @@ ${fish.msg}` : "");
     await session.send(msg);
   })
 
-  ctx.command('钓鱼操作 <uindex>', '对钓鱼发生的事件做出操作').action(async ({ session }, uindex) => {
+  ctx.command('钓鱼/钓鱼操作 <uindex>', '对钓鱼发生的事件做出操作').action(async ({ session }, uindex) => {
 
     let at = ''
     if (config.atQQ) {
       at = `<at id="${session.userId}" />`
     }
 
-    const temp = getguildData(session.guild);
+    const temp = getguildData(session.guildId);
     if (!temp.isPlay(session.userId)) {
       await session.send(at + '你还没开始钓鱼呢...');
       return
@@ -819,7 +826,7 @@ ${fish.msg}` : "");
     }
   })
 
-  ctx.command('钓鱼卖出 <goal> <num:number>', '卖出自己库存的鱼').userFields(['id']).action(async ({ session }, goal, num) => {
+  ctx.command('钓鱼/钓鱼卖出 <goal> <num:number>', '卖出自己库存的鱼').userFields(['id']).action(async ({ session }, goal, num) => {
 
     let at = ''
     if (config.atQQ) {
@@ -893,7 +900,7 @@ ${fish.msg}` : "");
   })
 
   ctx
-    .command('钓鱼鱼竿')
+    .command('钓鱼/钓鱼鱼竿')
     .action(async ({ session }) => {
       let at = ''
       if (config.atQQ) {
@@ -905,7 +912,7 @@ ${fish.msg}` : "");
     })
 
   ctx
-    .command('查看鱼竿 <rodName>')
+    .command('钓鱼/查看鱼竿 <rodName>')
     .action(async ({ session }, rodName) => {
       let at = ''
       if (config.atQQ) {
@@ -929,7 +936,7 @@ ${fish.msg}` : "");
     })
 
   ctx
-    .command('鱼竿替换 <rodName>')
+    .command('钓鱼/鱼竿替换 <rodName>')
     .action(async ({ session }, rodName) => {
       let at = ''
       if (config.atQQ) {
@@ -948,7 +955,7 @@ ${fish.msg}` : "");
     })
 
   ctx
-    .command('升级鱼竿')
+    .command('钓鱼/升级鱼竿')
     .action(async ({ session }) => {
       let at = ''
       if (config.atQQ) {
@@ -1008,7 +1015,7 @@ ${fish.msg}` : "");
       }
     })
 
-  ctx.command('我的积分', '查看自己的所有积分').userFields(['id']).action(async ({ session }) => {
+  ctx.command('钓鱼/我的积分', '查看自己的所有积分').userFields(['id']).action(async ({ session }) => {
 
     let at = ''
     if (config.atQQ) {
@@ -1670,7 +1677,9 @@ ${fishName.map((item, index) => {
     { select: false, name: '红包鱼', prob: 0.6, price: 100, hard: 4, img: 'https://smmcat.cn/run/fish/item/64/红包鱼.png', quality: '限定', msg: '恭喜发财~', info: '新春限定 出现在春节期间' },
     { select: false, name: '年年鱼', prob: 0.2, price: 300, hard: 7, img: 'https://smmcat.cn/run/fish/item/64/年年鱼.png', quality: '限定', msg: '年年有余！年年有鱼！', info: '新春限定 出现在春节期间' },
     { select: false, name: '黄金杂鱼', prob: 0.6, price: 10, hard: 1, img: 'https://smmcat.cn/run/fish/item/64/黄金杂鱼.png', quality: '限定', msg: '这次是 pro 版的杂鱼哟', info: '最爱你的 杂~鱼~！' },
-    { select: false, name: 'shigma', prob: 0.2, price: 1, hard: 1, quality: '限定', img: 'https://smmcat.cn/run/fish/item/64/shigma.png', msg: '钓到个啥鬼东西？看着就扎手', info: '只在周一出现\n话说...这么一个矢量几何的东西怎么会在海里...' }
+    { select: false, name: 'shigma', prob: 0.2, price: 1, hard: 1, quality: '限定', img: 'https://smmcat.cn/run/fish/item/64/shigma.png', msg: '钓到个啥鬼东西？看着就扎手', info: '只在周一出现\n话说...这么一个矢量几何的东西怎么会在海里...' },
+    { select: true, name: "青鱼", prob: 0.1, price: 100, hard: 10, img: "https://smmcat.cn/run/fish/item/64/青鱼.png", quality: "极品" },
+    { select: true, name: "石斑鱼", prob: 0.3, price: 55, hard: 8, img: "https://smmcat.cn/run/fish/item/64/石斑鱼.png", msg: "高档酒店的最爱", quality: "稀有" }
   ]
 
 
@@ -1809,12 +1818,30 @@ ${fishName.map((item, index) => {
       img: "https://smmcat.cn/run/fish/props/64/清蒸多宝鱼.png",
       select: true,
       msg: ["香嫩爽口的鱼肉，还没有刺！", "爽滑在舌间，鲜香在口齿", "软糯香甜，口感美味", "鱼肉鲜嫩,清淡可口！"]
+    },
+    {
+      name: "粘稠牛奶",
+      info: "这...这的确是牛奶(确信)，喝完后在接下来的三次钓鱼成功率提升30%",
+      time: 3,
+      up: { poss: [3, 3] },
+      img: "https://smmcat.cn/run/fish/props/64/粘稠牛奶.png",
+      select: true,
+      msg: ["令人兴奋的味道...", "喝完感觉挺有劲?", "...怪怪的,但是味道还行"]
+    },
+    {
+      name: "乌龟汤",
+      info: "十全的补品，复杂的工艺，汤鲜味美，爽滑的乌龟肉在唇齿间歌唱。喝使用后在接下来的五次钓鱼成功率提升 20%-30%，稀有度下限提高 1-2，初始稀有度基准提高 2-3",
+      time: 5,
+      up: { poss: [2, 3], lowProb: [1, 2], prob: [2, 3] },
+      img: "https://smmcat.cn/run/fish/props/64/乌龟汤.png",
+      select: true,
+      msg: ["爽滑慢舔的肉,暴风吸入", "喝完浑身是劲哇", "女子口葛口哇!!"]
     }
   ]
 
-  ctx.command('钓鱼使用 <goods>', '使用钓鱼道具').action(async ({ session }, goods) => {
+  ctx.command('钓鱼/钓鱼使用 <goods>', '使用钓鱼道具').action(async ({ session }, goods) => {
 
-    const temp = getguildData(session.guild);
+    const temp = getguildData(session.guildId);
     let at = ''
     if (config.atQQ) {
       at = `<at id="${session.userId}" />`

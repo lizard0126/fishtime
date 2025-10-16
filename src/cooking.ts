@@ -33,6 +33,12 @@ export const cooking = {
             success: 9,
             useTime: 4,
             msg: "用清蒸的方法可以最大限度的保持多宝鱼的营养，做法简单；就是比较费时。"
+        },
+        "乌龟汤": {
+            need: [{ name: "乌龟", num: 1 }],
+            success: 8,
+            useTime: 5,
+            msg: "乌龟的烹饪头头都是讲究，考虑小火慢炖，文火收汁，需要耐心等待。"
         }
     },
 
