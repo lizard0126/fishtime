@@ -1,3 +1,5 @@
+// 图片素材来自 https://wiki.biligame.com/dongsen/%E5%8D%9A%E7%89%A9%E9%A6%86%E5%9B%BE%E9%89%B4
+
 const fish = [{
     select: true,
     name: '太平洋桶眼鱼',
