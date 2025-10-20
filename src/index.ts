@@ -972,7 +972,7 @@ ${fish.msg}` : "");
     })
 
   ctx
-    .command('钓鱼/鱼竿替换 <rodName>')
+    .command('钓鱼/鱼竿替换 <rodName>','替换你当前的鱼竿')
     .action(async ({ session }, rodName) => {
       let at = ''
       if (config.atQQ) {
@@ -991,7 +991,7 @@ ${fish.msg}` : "");
     })
 
   ctx
-    .command('钓鱼/升级鱼竿')
+    .command('钓鱼/升级鱼竿','升级你持有的鱼竿!')
     .action(async ({ session }) => {
       let at = ''
       if (config.atQQ) {
